@@ -2,10 +2,6 @@ FROM ubuntu:trusty
 
 MAINTAINER Corteggiani Nassim nassim.corteggiani@maximintegrated.com
 
-#RUN useradd -ms /bin/bash fracture
-#RUN echo "fracture:fracturer" | chpasswd && adduser fracture sudo
-#RUN chown -R fracture:fracture /home/fracture
-
 RUN apt-get update
 RUN apt-get install -y --force-yes git libedit-dev build-essential \
 autoconf make gcc g++ binutils binutils-dev libc++-dev python groff doxygen nano\
@@ -26,7 +22,10 @@ WORKDIR /home/
 
 VOLUME /home/noname/Test:/home/test
 
-#USER fracture
+RUN useradd -ms /bin/bash fracture
+RUN echo "fracture:fracturer" | chpasswd && adduser fracture sudo
+RUN chown -R fracture:fracture /home/fracture
+USER fracture
 
 CMD ["echo","Home directory $HOME"]
 CMD ["echo","Workspace directory $HOME/projects"]
